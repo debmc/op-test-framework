@@ -371,11 +371,11 @@ class HostManagement():
                      minutes=minutes)
         return status
 
-    def wait_for_standby(self, timeout=10):
+    def wait_for_standby(self, minutes=10):
         '''
         Wait for Standby
         '''
-        r = self.wait_for_host_state("Off", minutes=timeout)
+        r = self.wait_for_host_state("Off", minutes=minutes)
 
     def wait_for_runtime(self, timeout=10):
         '''

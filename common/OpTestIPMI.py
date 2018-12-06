@@ -519,7 +519,7 @@ class OpTestIPMI():
             output = self.ipmitool.run(cmd)
         return BMC_CONST.FW_SUCCESS
 
-    def ipmi_wait_for_standby_state(self, i_timeout=120):
+    def ipmi_wait_for_standby_state(self, minutes=2):
         '''
         This function waits for system to reach standby state or soft off. The
         marker for standby state is the Host Status sensor which reflects the ACPI
@@ -527,12 +527,12 @@ class OpTestIPMI():
         system reached standby or soft-off state. The overall timeout for the standby is defined
         in the test configuration options.
 
-        :param i_timeout: The number of seconds to wait for system to reach standby,
+        :param i_timeout: Minutes to wait for system to reach standby,
                           i.e. How long to poll the ACPI sensor for soft-off
                           state before giving up.
         :type i_timeout: int
         '''
-        l_timeout = time.time() + i_timeout
+        l_timeout = time.time() + 60*minutes
         l_cmd = ' power status '
         wait_for = 'Chassis Power is off'
         while True:

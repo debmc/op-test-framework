@@ -228,7 +228,7 @@ class OpTestEnergyScaleDCMIstandby(OpTestEnergyScale):
         print("Performing a IPMI Power OFF Operation")
         # Perform a IPMI Power OFF Operation(Immediate Shutdown)
         self.cv_IPMI.ipmi_power_off()
-        rc = int(self.cv_SYSTEM.sys_wait_for_standby_state(BMC_CONST.SYSTEM_STANDBY_STATE_DELAY))
+        rc = int(self.cv_SYSTEM.sys_wait_for_standby_state())
         if rc == BMC_CONST.FW_SUCCESS:
             print("System is in standby/Soft-off state")
         elif rc == BMC_CONST.FW_PARAMETER:

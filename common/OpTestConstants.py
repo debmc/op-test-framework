@@ -123,12 +123,10 @@ class OpTestConstants():
 
     # TIME DELAYS & RETRIES
     BMC_WARM_RESET_DELAY = 20
-    BMC_COLD_RESET_DELAY = 150
     HOST_BRINGUP_TIME = 80
     SHORT_WAIT_IPL = 10
     SHORT_WAIT_STANDBY_DELAY = 5
     LONG_WAIT_IPL = 50
-    HOST_REBOOT_DELAY = 100
     WEB_UPDATE_DELAY = 600
     WEB_DRIVER_WAIT = 20
     OCC_RESET_RELOAD_COUNT = 15
@@ -141,7 +139,6 @@ class OpTestConstants():
 
     PING_RETRY_POWERCYCLE = 7
     PING_RETRY_FOR_STABILITY = 5
-    CMD_RETRY_BMC = 2
 
     # RETURN MESSAGES
     BMC_PASS_COLD_RESET = "Sent cold reset command to MC"
@@ -212,15 +209,6 @@ class OpTestConstants():
 
     # Constants related to ipmi console interfaces
     IPMI_SOL_ACTIVATE_TIME = 5
-    IPMI_SOL_DEACTIVATE_TIME = 10
-
-    IPMI_SOL_CONSOLE_ACTIVATE_OUTPUT = ["[SOL Session operational.  Use ~? for help]\r\n", \
-        "Error: Unable to establish IPMI v2 / RMCP+ session", pexpect.TIMEOUT, pexpect.EOF]
-    IPMI_CONSOLE_EXPECT_ENTER_OUTPUT = ["login: ", "#", "/ #", "Petitboot", pexpect.TIMEOUT, pexpect.EOF, "$"]
-    IPMI_CONSOLE_EXPECT_LOGIN = 0
-    IPMI_CONSOLE_EXPECT_PASSWORD = 0
-    IPMI_CONSOLE_EXPECT_PETITBOOT = [2,3]
-    IPMI_CONSOLE_EXPECT_RANDOM_STATE = [4,5]
 
     # HMI Test case constants
     HMI_PROC_RECV_DONE = 1

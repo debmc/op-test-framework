@@ -764,7 +764,7 @@ class OpTestSystem(object):
 
     def run_POWERING_OFF(self, state):
         self.block_setup_term = 1
-        rc = int(self.sys_wait_for_standby_state(BMC_CONST.SYSTEM_STANDBY_STATE_DELAY))
+        rc = int(self.sys_wait_for_standby_state())
         if rc == BMC_CONST.FW_SUCCESS:
             msg = "System is in standby/Soft-off state"
         elif rc == BMC_CONST.FW_PARAMETER:
@@ -923,15 +923,15 @@ class OpTestSystem(object):
             return BMC_CONST.FW_FAILED
         return rc
 
-    def sys_wait_for_standby_state(self, i_timeout=120):
+    def sys_wait_for_standby_state(self, minutes=2):
         '''
         Wait for system to reach standby or[S5/G2: soft-off]
 
-        :param i_timeout: The number of seconds to wait for system to reach standby, i.e. How long to poll the ACPI sensor for soft-off state before giving up.
+        :param i_timeout: Minutes to wait for system to reach standby, i.e. How long to poll the ACPI sensor for soft-off state before giving up.
         :rtype: BMC_CONST.FW_SUCCESS or BMC_CONST.FW_FAILED
         '''
         try:
-            l_rc = self.cv_IPMI.ipmi_wait_for_standby_state(i_timeout)
+            l_rc = self.cv_IPMI.ipmi_wait_for_standby_state(minutes=minutes)
         except OpTestError as e:
             return BMC_CONST.FW_FAILED
         return l_rc
@@ -1012,7 +1012,7 @@ class OpTestSystem(object):
     def sys_hard_reboot(self):
         log.debug("Performing a IPMI Power OFF Operation")
         self.cv_IPMI.ipmi_power_off()
-        rc = int(self.sys_wait_for_standby_state(BMC_CONST.SYSTEM_STANDBY_STATE_DELAY))
+        rc = int(self.sys_wait_for_standby_state())
         if rc == BMC_CONST.FW_SUCCESS:
             log.info("System is in standby/Soft-off state")
         elif rc == BMC_CONST.FW_PARAMETER:
@@ -1263,8 +1263,8 @@ class OpTestFSPSystem(OpTestSystem):
                                               conf=conf,
                                               state=state)
 
-    def sys_wait_for_standby_state(self, i_timeout=120):
-        return self.cv_BMC.wait_for_standby(i_timeout)
+    def sys_wait_for_standby_state(self, minutes=10):
+        return self.cv_BMC.wait_for_standby(minutes=minutes)
 
     def wait_for_it(self, **kwargs):
         # Ensure IPMI console is open so not to miss petitboot
@@ -1343,8 +1343,8 @@ class OpTestOpenBMCSystem(OpTestSystem):
     def sys_sel_check(self):
         self.rest.list_sel()
 
-    def sys_wait_for_standby_state(self, i_timeout=120):
-        self.rest.wait_for_standby()
+    def sys_wait_for_standby_state(self, minutes=10):
+        self.rest.wait_for_standby(minutes=minutes)
         return 0
 
     def wait_for_it(self, **kwargs):
@@ -1402,7 +1402,7 @@ class OpTestQemuSystem(OpTestSystem):
                                                conf=conf,
                                                state=state)
 
-    def sys_wait_for_standby_state(self, i_timeout=120):
+    def sys_wait_for_standby_state(self, minutes=2):
         self.bmc.power_off()
         return 0
 
@@ -1442,7 +1442,7 @@ class OpTestMamboSystem(OpTestSystem):
                                                conf=conf,
                                                state=state)
 
-    def sys_wait_for_standby_state(self, i_timeout=120):
+    def sys_wait_for_standby_state(self, minutes=2):
         self.bmc.power_off()
         return 0
 

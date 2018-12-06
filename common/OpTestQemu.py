@@ -213,7 +213,7 @@ class QemuIPMI():
         """For Qemu, this just kills the simulator"""
         self.console.close()
 
-    def ipmi_wait_for_standby_state(self, i_timeout=10):
+    def ipmi_wait_for_standby_state(self, minutes=2):
         """For Qemu, we just kill the simulator"""
         self.console.close()
 

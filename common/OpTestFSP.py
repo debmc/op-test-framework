@@ -266,12 +266,12 @@ class OpTestFSP():
             print("NFS mount is not available in FSP")
             return False
 
-    def wait_for_standby(self, timeout=10):
+    def wait_for_standby(self, minutes=10):
         '''
         Wait for system standby state. Returns 0 on success,
         throws exception on error.
         '''
-        timeout = time.time() + 60*timeout
+        timeout = time.time() + 60*minutes
         while True:
             if self.is_sys_standby():
                 print("Current system status: %s" % self.get_sys_status())
