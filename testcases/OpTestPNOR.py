@@ -59,22 +59,22 @@ class OpTestPNOR():
         self.cv_SYSTEM = conf.system()
 
     def pflashErase(self, offset, length):
-        self.c.run_command("pflash -e -f -a %d -s %d" % (offset,length))
+        self.c.run_command("pflash -e -f -a {} -s {}".format(offset,length))
 
     def pflashErasePartition(self, partition):
-        self.c.run_command("pflash -e -f -P %s" % (partition))
+        self.c.run_command("pflash -e -f -P {}".format(partition))
 
     def pflashRead(self, filename, offset, length):
-        self.c.run_command("pflash -r %s -a %d -s %d" % (filename,offset,length))
+        self.c.run_command("pflash -r {} -a {} -s {}".format(filename,offset,length))
 
     def pflashReadPartition(self, filename, partition):
-        self.c.run_command("pflash -r %s -P %s" % (filename,partition))
+        self.c.run_command("pflash -r {} -P {}".format(filename,partition))
 
     def pflashWrite(self, filename, offset, length):
-        self.c.run_command("pflash -f -p %s -a %d -s %d" % (filename,offset,length))
+        self.c.run_command("pflash -f -p {} -a {} -s {}".format(filename,offset,length))
 
     def pflashWritePartition(self, filename, partition):
-        self.c.run_command("pflash -f -p %s -P %s" % (filename,partition))
+        self.c.run_command("pflash -f -p {} -P {}".format(filename,partition))
 
     def pflashGetPartition(self, partition):
         d = self.c.run_command("pflash --info")
@@ -95,9 +95,9 @@ class OpTestPNOR():
                 return ret
 
     def comparePartitionFile(self, filename, partition):
-        self.c.run_command("pflash -r /tmp/tmp -P %s" % (partition))
+        self.c.run_command("pflash -r /tmp/tmp -P {}".format(partition))
         try:
-            self.c.run_command("diff /tmp/tmp %s" % (filename))
+            self.c.run_command("diff /tmp/tmp {}".format(filename))
         except CommandFailed as cf:
             self.assertEqual(cf.output, "0")
 
@@ -160,7 +160,7 @@ class OpTestPNOR():
         # Read the toc so we can write it back later
         self.pflashRead("/tmp/toc", tocInfo['offset'], tocInfo['length'])
         # Write all zeros to the toc (Because why not :D)
-        self.c.run_command("dd if=/dev/zero of=/tmp/zeros bs=1 count=%s" % (tocInfo['length']))
+        self.c.run_command("dd if=/dev/zero of=/tmp/zeros bs=1 count={}".format(tocInfo['length']))
         try:
             self.pflashWrite("/tmp/zeros", tocInfo['offset'], tocInfo['length'])
         except CommandFailed as cf:
